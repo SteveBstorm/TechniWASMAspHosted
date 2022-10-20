@@ -1,0 +1,25 @@
+﻿@page "/chat"
+@using WASMAspHosted.Shared
+@using System.Security.Claims
+@inject NavigationManager nav
+<AuthorizeView Roles="Admin">
+    <Authorized>
+        <h3>Chat : Bonjour, @*@context.User.FindFirst(ClaimTypes.Name).Value *@</h3>
+        <p>Votre nom :  <input @bind-value="author"/></p>
+        Votre message : <input @bind-value="message" />
+        <button class="btn" @onclick="SendMessage">Envoyer</button>
+        <ul>
+            @foreach (Message m in messages)
+            {
+                <li>@m.Author : @m.Content</li>
+            }
+        </ul>
+    </Authorized>
+    <NotAuthorized>
+        <p>C'est pas gentil d'être méchant</p>
+        
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+}

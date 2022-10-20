@@ -1,0 +1,25 @@
+﻿@page "/demo"
+@using WASMAspHosted.Shared
+@inject HttpClient client
+<h3>Demo</h3>
+@foreach (Game j in liste)
+{
+    <p>@j.Name : @j.Genre</p>
+}
+@code {
+    public List<Game> liste { get; set; } = new List<Game>();
+
+  
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+
+        Game j = new Game { Id = 4, Name = "mon jeu", Description = "c'est un jeu", Genre = "toto" };
+
+       
+        await client.PostAsJsonAsync("api/game", j);
+
+        liste = await client.GetFromJsonAsync<List<Game>>("api/game");
+    }
+}
